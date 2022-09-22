@@ -1,22 +1,17 @@
-import { useState } from 'react';
+import React from 'react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
 import './App.css';
+import PageSignin from './pages/signin';
 
 function App() {
-	let [number, setNumber] = useState(0);
-
-	const klik = () => {
-		setNumber((number += 1));
-
-		console.log(number);
-	};
-
 	return (
-		<>
-			<h1>Counter App</h1>
-			<p>Nilai dari counter saat ini {number}</p>
-			<button onClick={() => klik()}>Click</button>
-		</>
+		<BrowserRouter>
+			<Routes>
+				<Route path='/' element={<>Home</>} />
+				<Route path='/signin' element={<PageSignin />} />
+			</Routes>
+		</BrowserRouter>
 	);
 }
 
