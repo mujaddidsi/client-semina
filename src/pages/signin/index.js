@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
 import axios from 'axios';
+import React, { useState } from 'react';
+import { useNavigate, Navigate } from 'react-router-dom';
+import { Card, Container } from 'react-bootstrap';
 
-import { Form, Card, Container } from 'react-bootstrap';
-import TextInputWithLabel from '../../components/TextInputWithLabel';
-import SButton from '../../components/Button';
 import SAlert from '../../components/Alert';
+import SForm from './form';
+import { config } from '../../configs';
 
 function PageSignin() {
+	const token = localStorage.getItem('token');
+	const navigate = useNavigate();
 	const [form, setForm] = useState({
 		email: '',
 		password: '',
@@ -29,14 +32,13 @@ function PageSignin() {
 
 		try {
 			const res = await axios.post(
-				'http://localhost:9000/api/v1/cms/auth/signin',
-				{
-					email: form.email,
-					password: form.password,
-				}
+				`${config.api_host_dev}/cms/auth/signin`,
+				form
 			);
-			console.log(res.data.token);
+			// console.log(res.data.data.token);
+			localStorage.setItem('token', res.data.data.token);
 			setIsLoading(false);
+			navigate('/');
 		} catch (err) {
 			setIsLoading(false);
 			setAlert({
@@ -48,6 +50,8 @@ function PageSignin() {
 		}
 	};
 
+	if (token) return <Navigate to='/' replace={true} />;
+
 	return (
 		<Container md={12} className='my-5'>
 			<div className='m-auto' style={{ width: '50%' }}>
@@ -58,33 +62,12 @@ function PageSignin() {
 			<Card style={{ width: '50%' }} className='m-auto mt-5'>
 				<Card.Title className='text-center mt-2'>Welcome Back!</Card.Title>
 				<Card.Body>
-					<Form>
-						<TextInputWithLabel
-							label='Email address'
-							name='email'
-							value={form.email || ''}
-							type='email'
-							placeholder='Enter email'
-							onChange={handleChange}
-						/>
-
-						<TextInputWithLabel
-							label='Password'
-							name='password'
-							value={form.password || ''}
-							type='password'
-							placeholder='Enter password'
-							onChange={handleChange}
-						/>
-
-						<SButton
-							loading={isLoading}
-							disabled={isLoading}
-							// action={handleSubmit}
-							variant='primary'>
-							Submit
-						</SButton>
-					</Form>
+					<SForm
+						form={form}
+						isLoading={isLoading}
+						handleChange={handleChange}
+						handleSubmit={handleSubmit}
+					/>
 				</Card.Body>
 			</Card>
 		</Container>
