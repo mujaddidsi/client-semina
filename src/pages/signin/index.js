@@ -35,7 +35,7 @@ function PageSignin() {
 				`${config.api_host_dev}/cms/auth/signin`,
 				form
 			);
-			// console.log(res.data.data.token);
+			
 			localStorage.setItem('token', res.data.data.token);
 			setIsLoading(false);
 			navigate('/');
