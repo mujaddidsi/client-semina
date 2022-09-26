@@ -1,15 +1,17 @@
-import axios from 'axios';
 import React, { useState } from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { Card, Container } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-import SAlert from '../../components/Alert';
 import SForm from './form';
-import { config } from '../../configs';
+import SAlert from '../../components/Alert';
+import { postData } from '../../utils/fetch';
+import { userLogin } from '../../redux/auth/actions';
 
 function PageSignin() {
-	const token = localStorage.getItem('token');
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
+
 	const [form, setForm] = useState({
 		email: '',
 		password: '',
@@ -31,12 +33,10 @@ function PageSignin() {
 		setIsLoading(true);
 
 		try {
-			const res = await axios.post(
-				`${config.api_host_dev}/cms/auth/signin`,
-				form
-			);
-			
-			localStorage.setItem('token', res.data.data.token);
+			const res = await postData(`/cms/auth/signin`, form);
+
+			dispatch(userLogin(res.data.data.token, res.data.data.role));
+
 			setIsLoading(false);
 			navigate('/');
 		} catch (err) {
@@ -44,13 +44,10 @@ function PageSignin() {
 			setAlert({
 				status: true,
 				message: err?.response?.data?.msg ?? 'Internal server error',
-
 				type: 'danger',
 			});
 		}
 	};
-
-	if (token) return <Navigate to='/' replace={true} />;
 
 	return (
 		<Container md={12} className='my-5'>

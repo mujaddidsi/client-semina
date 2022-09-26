@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { Container, Table, Spinner } from 'react-bootstrap';
@@ -36,7 +37,7 @@ function PageCategories() {
 		getCategoriesAPI();
 	}, []);
 
-	if (!token) return <Navigate to='/signin' replace={true} />;
+	if (!token) return <Navigate to='/login' replace={true} />;
 
 	return (
 		<>

@@ -54,8 +54,8 @@ function CategoriesEdit() {
 	return (
 		<Container>
 			<SBreadCrumb
-				textSecound={'Categories'}
-				urlSecound={'/categories'}
+				textSecond={'Categories'}
+				urlSecond={'/categories'}
 				textThird='Edit'
 			/>
 			{alert.status && <SAlert type={alert.type} message={alert.message} />}

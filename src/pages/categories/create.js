@@ -1,13 +1,17 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { Container } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+
 import SBreadCrumb from '../../components/Breadcrumb';
 import SAlert from '../../components/Alert';
 import SForm from './form';
-
-import { useNavigate } from 'react-router-dom';
+import { config } from '../../configs';
+import SNavbar from '../../components/Navbar';
 
 function CategoriesCreate() {
 	const navigate = useNavigate();
+	const token = localStorage.getItem('token');
 
 	const [form, setForm] = useState({
 		name: '',
@@ -28,7 +32,11 @@ function CategoriesCreate() {
 	const handleSubmit = async () => {
 		setIsLoading(true);
 		try {
-			// const res = await postData('api/v1/categories', form);
+			await axios.post(`${config.api_host_dev}/cms/	categories`, form, {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
 
 			navigate('/categories');
 			setIsLoading(false);
@@ -44,20 +52,23 @@ function CategoriesCreate() {
 	};
 
 	return (
-		<Container>
-			<SBreadCrumb
-				textSecound={'Categories'}
-				urlSecound={'/categories'}
-				textThird='Create'
-			/>
-			{alert.status && <SAlert type={alert.type} message={alert.message} />}
-			<SForm
-				form={form}
-				isLoading={isLoading}
-				handleChange={handleChange}
-				handleSubmit={handleSubmit}
-			/>
-		</Container>
+		<>
+			<SNavbar />
+			<Container>
+				<SBreadCrumb
+					textSecond={'Categories'}
+					urlSecond={'/categories'}
+					textThird='Create'
+				/>
+				{alert.status && <SAlert type={alert.type} message={alert.message} />}
+				<SForm
+					form={form}
+					isLoading={isLoading}
+					handleChange={handleChange}
+					handleSubmit={handleSubmit}
+				/>
+			</Container>
+		</>
 	);
 }
 
