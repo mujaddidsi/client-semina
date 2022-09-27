@@ -3,12 +3,12 @@ import { Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import SBreadCrumb from '../../components/Breadcrumb';
 import SButton from '../../components/Button';
-// import Table from '../../components/TableWithAction';
+import Table from '../../components/TableWithAction';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCategories } from '../../redux/categories/actions';
-import SAlert from '../../components/Alert';
+// import SAlert from '../../components/Alert';
 // import Swal from 'sweetalert2';
-import { deleteData } from '../../utils/fetch';
+// import { deleteData } from '../../utils/fetch';
 // import { setNotif } from '../../redux/notif/actions';
 import { accessCategories } from '../../const/access';
 
@@ -16,7 +16,7 @@ function Categories() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
-	const notif = useSelector((state) => state.notif);
+	// const notif = useSelector((state) => state.notif);
 	const categories = useSelector((state) => state.categories);
 	const [access, setAccess] = useState({
 		add: false,
@@ -72,7 +72,7 @@ function Categories() {
 
 	return (
 		<Container className='mt-3'>
-			<SBreadCrumb textSecound={'Categories'} />
+			<SBreadCrumb textSecond={'Categories'} />
 
 			{access.add && (
 				<SButton
@@ -86,15 +86,15 @@ function Categories() {
 				<SAlert type={notif.typeNotif} message={notif.message} />
 			)} */}
 
-			{/* <Table
+			<Table
 				status={categories.status}
-				thead={['Nama', 'Aksi']}
+				thead={['Name', 'Action']}
 				data={categories.data}
 				tbody={['name']}
 				editUrl={access.edit ? `/categories/edit` : null}
-				deleteAction={access.hapus ? (id) => handleDelete(id) : null}
+				deleteAction={access.delete ? (id) => handleDelete(id) : null}
 				withoutPagination
-			/> */}
+			/>
 		</Container>
 	);
 }

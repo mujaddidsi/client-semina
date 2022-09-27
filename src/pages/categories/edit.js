@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import SBreadCrumb from '../../components/Breadcrumb';
 import SAlert from '../../components/Alert';
-import SForm from './form';
-import { useNavigate } from 'react-router-dom';
+import Form from './form';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getData, putData } from '../../utils/fetch';
+import { useDispatch } from 'react-redux';
+// import { setNotif } from '../../redux/notif/actions';
 
-function CategoriesEdit() {
+function CategoryEdit() {
 	const navigate = useNavigate();
-
+	const dispatch = useDispatch();
+	const { categoryId } = useParams();
 	const [form, setForm] = useState({
 		name: '',
 	});
@@ -25,8 +29,9 @@ function CategoriesEdit() {
 	};
 
 	const fetchOneCategories = async () => {
-		// const res = await getData(`api/v1/categories/${categoryId}`);
-		// setForm({ ...form, name: res.data.data.name });
+		const res = await getData(`/cms/categories/${categoryId}`);
+
+		setForm({ ...form, name: res.data.data.name });
 	};
 
 	useEffect(() => {
@@ -36,30 +41,37 @@ function CategoriesEdit() {
 
 	const handleSubmit = async () => {
 		setIsLoading(true);
-		try {
-			// const res = await putData(`api/v1/categories/${categoryId}`, form);
-
+		const res = await putData(`/cms/categories/${categoryId}`, form);
+		if (res?.data?.data) {
+			// dispatch(
+			// 	setNotif(
+			// 		true,
+			// 		'success',
+			// 		`berhasil ubah kategori ${res.data.data.name}`
+			// 	)
+			// );
 			navigate('/categories');
 			setIsLoading(false);
-		} catch (err) {
+		} else {
 			setIsLoading(false);
 			setAlert({
 				...alert,
 				status: true,
 				type: 'danger',
-				message: err.response.data.msg,
+				message: res.response.data.msg,
 			});
 		}
 	};
+
 	return (
-		<Container>
+		<Container className='mt-3'>
 			<SBreadCrumb
 				textSecond={'Categories'}
 				urlSecond={'/categories'}
 				textThird='Edit'
 			/>
 			{alert.status && <SAlert type={alert.type} message={alert.message} />}
-			<SForm
+			<Form
 				edit
 				form={form}
 				isLoading={isLoading}
@@ -70,4 +82,4 @@ function CategoriesEdit() {
 	);
 }
 
-export default CategoriesEdit;
+export default CategoryEdit;

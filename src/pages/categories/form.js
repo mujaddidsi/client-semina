@@ -13,15 +13,15 @@ export default function CategoriesForm({
 	return (
 		<Form>
 			<TextInputWithLabel
-				placeholder={'Input category name'}
-				label={'Category name'}
+				placeholder={'Masukan nama kategori'}
+				label={'Nama kategori'}
 				name='name'
 				value={form.name}
 				type='text'
 				onChange={handleChange}
 			/>
 			<SButton variant='primary' action={handleSubmit} loading={isLoading}>
-				{edit ? 'Change' : 'Save'}
+				{edit ? 'Ubah' : 'Simpan'}
 			</SButton>
 		</Form>
 	);

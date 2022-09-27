@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../Button';
+import SButton from '../Button';
 import { useNavigate } from 'react-router-dom';
 import { Image, Spinner } from 'react-bootstrap';
 import moment from 'moment';
@@ -52,21 +52,21 @@ function TbodyWithAction({
 								<td>
 									{customAction && customAction(data._id, data.statusEvent)}
 									{editUrl && (
-										<Button
+										<SButton
 											variant='success'
 											size={'sm'}
 											action={() => navigate(`${editUrl}/${data._id}`)}>
 											Edit
-										</Button>
+										</SButton>
 									)}
 									{deleteAction && (
-										<Button
+										<SButton
 											className={'mx-2'}
 											variant='danger'
 											size={'sm'}
 											action={() => deleteAction(data._id)}>
-											Hapus
-										</Button>
+											Delete
+										</SButton>
 									)}
 								</td>
 							)}
@@ -76,7 +76,7 @@ function TbodyWithAction({
 			) : (
 				<tr>
 					<td colSpan={display.length + 1} style={{ textAlign: 'center' }}>
-						Tidak Ditemukan Data
+						Data not Found
 					</td>
 				</tr>
 			)}
