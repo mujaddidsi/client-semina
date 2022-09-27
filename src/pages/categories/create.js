@@ -53,7 +53,6 @@ function CategoriesCreate() {
 
 	return (
 		<>
-			<SNavbar />
 			<Container>
 				<SBreadCrumb
 					textSecond={'Categories'}
