@@ -6,7 +6,7 @@ import SForm from './form';
 import { postData } from '../../utils/fetch';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-// import { setNotif } from '../../redux/notif/actions';
+import { setNotif } from '../../redux/notif/actions';
 
 function CategoriesCreate() {
 	const navigate = useNavigate();
@@ -31,13 +31,13 @@ function CategoriesCreate() {
 		setIsLoading(true);
 		const res = await postData('/cms/categories', form);
 		if (res?.data?.data) {
-			// dispatch(
-			// 	setNotif(
-			// 		true,
-			// 		'success',
-			// 		`berhasil tambah kategori ${res.data.data.name}`
-			// 	)
-			// );
+			dispatch(
+				setNotif(
+					true,
+					'success',
+					`Successfully added category ${res.data.data.name}`
+				)
+			);
 			navigate('/categories');
 			setIsLoading(false);
 		} else {

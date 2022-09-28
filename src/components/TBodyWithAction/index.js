@@ -1,8 +1,8 @@
+import moment from 'moment';
 import React from 'react';
-import SButton from '../Button';
 import { useNavigate } from 'react-router-dom';
 import { Image, Spinner } from 'react-bootstrap';
-import moment from 'moment';
+import SButton from '../Button';
 import { config } from '../../configs';
 
 function TbodyWithAction({

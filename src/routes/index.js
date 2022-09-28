@@ -6,7 +6,7 @@ import Login from '../pages/signin';
 import { HomeRoute } from './HomeRoute';
 import SNavbar from '../components/Navbar';
 import { CategoriesRoute } from './CategoriesRoute';
-// import { TalentsRoute } from './TalentsRoute';
+import { TalentsRoute } from './TalentsRoute';
 // import { PaymentsRoute } from './PaymentsRoute';
 // import { EventsRoute } from './EventsRoute';
 // import { OrdersRoute } from './OrdersRoute';
@@ -32,8 +32,8 @@ export function AppRoutes() {
 				}>
 				<Route path='dashboard/*' element={<HomeRoute />} />
 				<Route path='categories/*' element={<CategoriesRoute />} />
-				{/* <Route path='talents/*' element={<TalentsRoute />} />
-        <Route path='payments/*' element={<PaymentsRoute />} />
+				<Route path='talents/*' element={<TalentsRoute />} />
+				{/* <Route path='payments/*' element={<PaymentsRoute />} />
         <Route path='events/*' element={<EventsRoute />} />
         <Route path='orders/*' element={<OrdersRoute />} /> */}
 				<Route path='' element={<Navigate to='/dashboard' replace={true} />} />
